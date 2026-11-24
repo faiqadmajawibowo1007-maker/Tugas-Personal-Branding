@@ -1,0 +1,271 @@
+{% extends "base.html" %}
+
+{% block title %}Kontak & Kolaborasi | Faiq Admaja Wibowo{% endblock %}
+
+{% block content %}
+  <section class="page-hero-header">
+    <div class="container">
+      <div class="page-hero-badge">
+        <i class="fa-solid fa-envelope"></i>
+        <span>HUBUNGI SAYA</span>
+      </div>
+      <h1 class="page-hero-title">Mari Berkolaborasi & <span class="gradient-text">Menciptakan Karya</span></h1>
+      <p class="page-hero-subtitle">
+        Terbuka untuk diskusi proyek desain UI/UX, video produksi, motion graphics, kepanitiaan, maupun penelitian data science.
+      </p>
+    </div>
+  </section>
+
+  <section class="contact-section scroll-fade-section" style="padding-top: 20px;">
+    <div class="container">
+
+      <div class="contact-layout-grid">
+        
+        <div class="contact-form-column">
+          <div class="contact-form-card">
+            <div class="form-card-header">
+              <div class="form-header-icon"><i class="fa-solid fa-paper-plane"></i></div>
+              <div>
+                <h3 class="form-title">Kirim Pesan Kolaborasi</h3>
+                <p class="form-subtitle">Formulir interaktif diproses langsung oleh server Python Flask</p>
+              </div>
+            </div>
+
+            <form action="{{ url_for('contact') }}" method="POST" class="flask-contact-form" id="contactForm">
+              
+              <div class="form-row-dual">
+                <div class="form-group">
+                  <label for="inputName" class="form-label">
+                    <i class="fa-solid fa-user"></i> Nama Lengkap <span class="required-star">*</span>
+                  </label>
+                  <input type="text" id="inputName" name="name" class="form-control" placeholder="Contoh: Ahmad Rizki" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="inputEmail" class="form-label">
+                    <i class="fa-solid fa-envelope"></i> Alamat Email <span class="required-star">*</span>
+                  </label>
+                  <input type="email" id="inputEmail" name="email" class="form-control" placeholder="nama@email.com" required>
+                </div>
+              </div>
+
+              <div class="form-row-dual">
+                <div class="form-group">
+                  <label for="inputService" class="form-label">
+                    <i class="fa-solid fa-list-check"></i> Kategori Layanan / Topik
+                  </label>
+                  <select id="inputService" name="service" class="form-select">
+                    <option value="UI/UX & Product Design">UI/UX & Product Design</option>
+                    <option value="Cinematic Video Editing">Cinematic Video Editing</option>
+                    <option value="Motion Graphics & Stage Visuals">Motion Graphics & Stage Visuals</option>
+                    <option value="Aerial Drone Cinematography">Aerial Drone Cinematography</option>
+                    <option value="Python & Data Analytics">Python & Data Analytics</option>
+                    <option value="Social Media Feeds & Event Branding">Social Media Feeds & Event Branding</option>
+                    <option value="Kolaborasi Riset / Organisasi">Kolaborasi Riset / Organisasi</option>
+                    <option value="Pertanyaan Umum">Pertanyaan Umum Lainnya</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="inputSubject" class="form-label">
+                    <i class="fa-solid fa-tag"></i> Subjek Pesan <span class="required-star">*</span>
+                  </label>
+                  <input type="text" id="inputSubject" name="subject" class="form-control" placeholder="Contoh: Rencana Pembuatan Video Profil" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputMessage" class="form-label">
+                  <i class="fa-solid fa-message"></i> Pesan & Kebutuhan Proyek <span class="required-star">*</span>
+                </label>
+                <textarea id="inputMessage" name="message" class="form-control" rows="5" placeholder="Tuliskan deskripsi ide, ekspektasi waktu, atau pertanyaan Anda..." required></textarea>
+              </div>
+
+              <div class="form-submit-row">
+                <button type="submit" class="btn-primary form-submit-btn">
+                  <span>Kirim Formulir ke Server</span>
+                  <i class="fa-solid fa-paper-plane"></i>
+                </button>
+                <span class="form-notice-text">
+                  <i class="fa-solid fa-shield-halved"></i> Data diproses aman via backend Flask (HTTP POST).
+                </span>
+              </div>
+
+            </form>
+
+            <div class="quick-message-box" style="margin-top: 32px;">
+              <h4><i class="fa-brands fa-whatsapp" style="color: #25d366;"></i> Ingin Obrolan Lebih Cepat via WhatsApp?</h4>
+              <p>Ketik draf pesan Anda di bawah ini, tombol akan langsung membuka aplikasi WhatsApp:</p>
+              <div class="quick-send-group">
+                <input type="text" id="quickMsgInput" class="input-quick-msg" placeholder="Halo Faiq, saya ingin berdiskusi mengenai proyek...">
+                <button type="button" class="btn-send-wa" id="quickMsgBtn">
+                  <span>Kirim</span>
+                  <i class="fa-solid fa-paper-plane"></i>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="contact-channels-column">
+          
+          <div class="contact-left-card">
+            <h3 class="contact-header-title">Saluran Komunikasi Langsung</h3>
+            <p class="contact-header-desc">
+              Klik tombol salin untuk menyimpan kontak, atau klik buka untuk langsung menuju profil dan chat.
+            </p>
+
+            <div class="contact-channels-list">
+              
+              <div class="contact-channel-item">
+                <div class="channel-left">
+                  <div class="channel-icon-pill" style="color: #25d366; background: rgba(37, 211, 102, 0.12);">
+                    <i class="fa-brands fa-whatsapp"></i>
+                  </div>
+                  <div class="channel-details">
+                    <h5>WhatsApp & Telepon</h5>
+                    <p>{{ profile.whatsapp }}</p>
+                  </div>
+                </div>
+                <div class="channel-actions">
+                  <button class="action-btn-copy" data-copy="{{ profile.whatsapp }}" title="Salin Nomor WhatsApp">
+                    <i class="fa-regular fa-copy"></i> Salin
+                  </button>
+                  <a href="https://wa.me/{{ profile.whatsapp_raw }}" target="_blank" rel="noopener noreferrer" class="action-btn-open">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Chat
+                  </a>
+                </div>
+              </div>
+
+              <div class="contact-channel-item">
+                <div class="channel-left">
+                  <div class="channel-icon-pill" style="color: #ea4335; background: rgba(234, 67, 53, 0.12);">
+                    <i class="fa-regular fa-envelope"></i>
+                  </div>
+                  <div class="channel-details">
+                    <h5>Alamat Email Resmi</h5>
+                    <p>{{ profile.email }}</p>
+                  </div>
+                </div>
+                <div class="channel-actions">
+                  <button class="action-btn-copy" data-copy="{{ profile.email }}" title="Salin Email">
+                    <i class="fa-regular fa-copy"></i> Salin
+                  </button>
+                  <a href="mailto:{{ profile.email }}" class="action-btn-open">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Kirim
+                  </a>
+                </div>
+              </div>
+
+              <div class="contact-channel-item">
+                <div class="channel-left">
+                  <div class="channel-icon-pill" style="color: #0a66c2; background: rgba(10, 102, 194, 0.12);">
+                    <i class="fa-brands fa-linkedin-in"></i>
+                  </div>
+                  <div class="channel-details">
+                    <h5>LinkedIn Profesional</h5>
+                    <p>linkedin.com/in/faiq-admaja-w-bb3a98256</p>
+                  </div>
+                </div>
+                <div class="channel-actions">
+                  <button class="action-btn-copy" data-copy="{{ profile.linkedin }}" title="Salin Link LinkedIn">
+                    <i class="fa-regular fa-copy"></i> Salin
+                  </button>
+                  <a href="{{ profile.linkedin }}" target="_blank" rel="noopener noreferrer" class="action-btn-open">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Buka
+                  </a>
+                </div>
+              </div>
+
+              <div class="contact-channel-item">
+                <div class="channel-left">
+                  <div class="channel-icon-pill" style="color: #e1306c; background: rgba(225, 48, 108, 0.12);">
+                    <i class="fa-brands fa-instagram"></i>
+                  </div>
+                  <div class="channel-details">
+                    <h5>Instagram Resmi</h5>
+                    <p>{{ profile.instagram_handle }}</p>
+                  </div>
+                </div>
+                <div class="channel-actions">
+                  <button class="action-btn-copy" data-copy="{{ profile.instagram }}" title="Salin Link Instagram">
+                    <i class="fa-regular fa-copy"></i> Salin
+                  </button>
+                  <a href="{{ profile.instagram }}" target="_blank" rel="noopener noreferrer" class="action-btn-open">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Kunjungi
+                  </a>
+                </div>
+              </div>
+
+              <div class="contact-channel-item">
+                <div class="channel-left">
+                  <div class="channel-icon-pill" style="color: #00f2fe; background: rgba(0, 242, 254, 0.12);">
+                    <i class="fa-brands fa-tiktok"></i>
+                  </div>
+                  <div class="channel-details">
+                    <h5>TikTok Channel</h5>
+                    <p>{{ profile.tiktok_handle }}</p>
+                  </div>
+                </div>
+                <div class="channel-actions">
+                  <button class="action-btn-copy" data-copy="{{ profile.tiktok }}" title="Salin Link TikTok">
+                    <i class="fa-regular fa-copy"></i> Salin
+                  </button>
+                  <a href="{{ profile.tiktok }}" target="_blank" rel="noopener noreferrer" class="action-btn-open">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Tonton
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="contact-right-card" style="margin-top: 24px;">
+            <div class="qr-glow-aura"></div>
+            
+            <div class="qr-card-frame">
+              <img src="{{ url_for('static', filename='assets/qr_portfolio_gdrive.png') }}" alt="Scan QR Code Portfolio Faiq AW" class="qr-img">
+            </div>
+
+            <h3 class="qr-title">PORTFOLIO. QR CODE</h3>
+            <p class="qr-desc">
+              Arahkan kamera ponsel Anda ke kode QR di atas atau klik tombol di bawah untuk langsung menuju berkas portofolio digital Google Drive Faiq AW.
+            </p>
+
+            <a href="{{ profile.gdrive_portfolio }}" target="_blank" rel="noopener noreferrer" class="qr-badge-scan" id="btn-scan-qr">
+              <i class="fa-solid fa-qrcode"></i>
+              <span>Buka Google Drive Portfolio</span>
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const quickInput = document.getElementById('quickMsgInput');
+    const quickBtn = document.getElementById('quickMsgBtn');
+    
+    if (quickBtn && quickInput) {
+      quickBtn.addEventListener('click', () => {
+        const text = quickInput.value.trim();
+        const baseMsg = text ? encodeURIComponent(text) : encodeURIComponent("Halo Faiq AW, saya ingin berdiskusi mengenai proyek kolaborasi...");
+        window.open(`https://wa.me/{{ profile.whatsapp_raw }}?text=${baseMsg}`, '_blank');
+      });
+      
+      quickInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          quickBtn.click();
+        }
+      });
+    }
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Portofolio & Bukti Kerja | Faiq Admaja Wibowo{% endblock %}
+
+{% block content %}
+  
+  <section class="page-hero-header">
+    <div class="container">
+      <div class="page-hero-badge">
+        <i class="fa-solid fa-layer-group"></i>
+        <span>PORTOFOLIO & BUKTI KERJA</span>
+      </div>
+      <h1 class="page-hero-title">Galeri Proyek <span class="gradient-text">Terpilih</span></h1>
+      <p class="page-hero-subtitle">
+        Koleksi karya nyata video dokumenter, motion graphics panggung, feed media sosial kreatif, antarmuka aplikasi, hingga website resmi Universitas Brawijaya.
+      </p>
+    </div>
+  </section>
+
+  <section class="projects-section scroll-fade-section" style="padding-top: 20px;">
+    <div class="container">
+
+      <div class="project-filter-bar">
+        <button class="filter-btn {% if current_category == 'all' %}active{% endif %}" data-filter="all">Semua Kategori ({{ projects|length }})</button>
+        <button class="filter-btn {% if current_category == 'video' %}active{% endif %}" data-filter="video">Video Editing</button>
+        <button class="filter-btn {% if current_category == 'motion' %}active{% endif %}" data-filter="motion">Motion Graphic</button>
+        <button class="filter-btn {% if current_category == 'social' %}active{% endif %}" data-filter="social">Social Media Design</button>
+        <button class="filter-btn {% if current_category == 'website' %}active{% endif %}" data-filter="website">Website & UI/UX EM UB</button>
+      </div>
+
+      <div class="projects-grid">
+        {% for p in projects %}
+          <div class="project-card" data-category="{{ p.category }}" data-id="{{ p.id }}">
+            <div class="project-thumbnail-wrapper" title="Klik untuk pratinjau modal">
+              <span class="project-badge-type">{{ p.category_name }} &bull; {{ p.year }}</span>
+              <img src="{{ url_for('static', filename=p.image) }}" alt="{{ p.title }}" class="project-thumb">
+              <div class="project-view-overlay">
+                <div class="view-btn-circle"><i class="fa-solid fa-expand"></i></div>
+              </div>
+            </div>
+            
+            <div class="project-info">
+              <h3 class="project-title">{{ p.title }}</h3>
+              <p class="project-summary">{{ p.summary }}</p>
+              
+              <div class="project-footer-tags">
+                <div class="tech-tags">
+                  <span class="tag-mini">{{ p.tools }}</span>
+                </div>
+
+                <div class="project-actions-row">
+                  <a href="{{ url_for('project_detail', project_id=p.id) }}" class="project-direct-btn" style="background: rgba(2, 132, 199, 0.08); color: var(--palette-sky); border-color: rgba(2, 132, 199, 0.2);">
+                    <span>Studi Kasus</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                  </a>
+                  <a href="{{ p.link }}" target="_blank" rel="noopener noreferrer" class="project-direct-btn">
+                    <span>{{ p.link_label }}</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="drive-archive-card" style="margin-top: 50px;">
+        <div class="archive-icon"><i class="fa-brands fa-google-drive"></i></div>
+        <div class="archive-info">
+          <h4>Arsip Lengkap Google Drive Portofolio</h4>
+          <p>Ingin melihat master video resolusi tinggi, aset grafis vektor, booklet dokumentasi, dan sertifikat resmi?</p>
+        </div>
+        <a href="{{ profile.gdrive_portfolio }}" target="_blank" rel="noopener noreferrer" class="btn-primary">
+          <i class="fa-solid fa-folder-open"></i>
+          <span>Buka Google Drive</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+{% endblock %}

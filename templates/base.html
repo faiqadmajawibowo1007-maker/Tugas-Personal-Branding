@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Faiq AW | Portfolio - Data Science & Creative Media Designer{% endblock %}</title>
+  <meta name="description" content="Portofolio resmi Faiq Admaja Wibowo - Mahasiswa Sains Data Universitas Brawijaya, Staf Ahli Pendayagunaan Teknologi EM UB 2026, UI/UX Designer, Video Editor, & Motion Graphic Artist.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block head_extra %}{% endblock %}
+</head>
+<body>
+
+  <div class="ambient-glow glow-top-left"></div>
+  <div class="ambient-glow glow-bottom-right"></div>
+  <div class="ambient-glow glow-center"></div>
+
+  <div class="scroll-progress-container">
+    <div class="scroll-progress-bar"></div>
+  </div>
+
+  <header class="navbar">
+    <div class="container nav-content">
+      <a href="{{ url_for('home') }}" class="nav-brand">
+        <span class="brand-name-full">{{ profile.name | upper }}</span>
+      </a>
+
+      <ul class="nav-links">
+        <li class="nav-item {% if page == 'home' %}active{% endif %}">
+          <a href="{{ url_for('home') }}">Beranda</a>
+        </li>
+        <li class="nav-item {% if page == 'about' %}active{% endif %}">
+          <a href="{{ url_for('about') }}">Tentang</a>
+        </li>
+        <li class="nav-item {% if page == 'services' %}active{% endif %}">
+          <a href="{{ url_for('services') }}">Layanan & Keahlian</a>
+        </li>
+        <li class="nav-item {% if page == 'portfolio' %}active{% endif %}">
+          <a href="{{ url_for('portfolio') }}">Portofolio Karya</a>
+        </li>
+        <li class="nav-item {% if page == 'contact' %}active{% endif %}">
+          <a href="{{ url_for('contact') }}">Kontak</a>
+        </li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="{{ url_for('contact') }}" class="nav-cta">
+          <span>Hubungi Saya</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Mobile Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-nav-backdrop" id="mobileBackdrop"></div>
+  <aside class="mobile-drawer" id="mobileDrawer" aria-label="Menu Navigasi Mobile">
+    <div class="drawer-header">
+      <div class="drawer-brand">
+        <span class="drawer-brand-title">FA</span>
+        <div class="drawer-brand-texts">
+          <span class="drawer-brand-name">{{ profile.name | upper }}</span>
+          <span class="drawer-brand-tag">Sains Data &bull; Creative Media</span>
+        </div>
+      </div>
+      <button class="drawer-close-btn" id="drawerCloseBtn" aria-label="Tutup Menu Mobile">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="drawer-body">
+      <ul class="drawer-nav-list">
+        <li class="drawer-item">
+          <a href="{{ url_for('home') }}" class="drawer-link {% if page == 'home' %}active{% endif %}">
+            <i class="fa-solid fa-house"></i><span>Beranda</span>
+          </a>
+        </li>
+        <li class="drawer-item">
+          <a href="{{ url_for('about') }}" class="drawer-link {% if page == 'about' %}active{% endif %}">
+            <i class="fa-solid fa-user-astronaut"></i><span>Tentang & Filosofi</span>
+          </a>
+        </li>
+        <li class="drawer-item">
+          <a href="{{ url_for('services') }}" class="drawer-link {% if page == 'services' %}active{% endif %}">
+            <i class="fa-solid fa-laptop-code"></i><span>Layanan & Keahlian</span>
+          </a>
+        </li>
+        <li class="drawer-item">
+          <a href="{{ url_for('portfolio') }}" class="drawer-link {% if page == 'portfolio' %}active{% endif %}">
+            <i class="fa-solid fa-layer-group"></i><span>Karya & Proyek</span>
+          </a>
+        </li>
+        <li class="drawer-item">
+          <a href="{{ url_for('contact') }}" class="drawer-link {% if page == 'contact' %}active{% endif %}">
+            <i class="fa-solid fa-envelope"></i><span>Hubungi Saya</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="drawer-cta-section">
+        <a href="{{ url_for('contact') }}" class="drawer-btn-cta">
+          <span>Mulai Kolaborasi</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-notifications-wrapper container">
+        {% for category, msg in messages %}
+          <div class="flask-alert alert-{{ category }}">
+            <div class="alert-icon">
+              {% if category == 'success' %}
+                <i class="fa-solid fa-circle-check"></i>
+              {% else %}
+                <i class="fa-solid fa-circle-exclamation"></i>
+              {% endif %}
+            </div>
+            <div class="alert-content">
+              <strong>{% if category == 'success' %}Sukses!{% else %}Perhatian!{% endif %}</strong>
+              <p>{{ msg }}</p>
+            </div>
+            <button type="button" class="alert-close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <main class="main-content-flow">
+    {% block content %}{% endblock %}
+  </main>
+
+  <div class="project-modal" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <button class="modal-close-btn" aria-label="Tutup Detail Proyek"><i class="fa-solid fa-xmark"></i></button>
+      <div class="modal-img-container">
+        <img src="" alt="" class="modal-img">
+      </div>
+      <div class="modal-body">
+        <div class="modal-meta-row">
+          <span class="modal-category-badge"></span>
+        </div>
+        <h2 class="modal-title"></h2>
+        <p class="modal-description"></p>
+        
+        <div class="modal-info-grid">
+          <div class="modal-info-col">
+            <h6>Klien / Organisasi</h6>
+            <p id="modal-client">-</p>
+          </div>
+          <div class="modal-info-col">
+            <h6>Tahun Pengerjaan</h6>
+            <p id="modal-year">-</p>
+          </div>
+          <div class="modal-info-col">
+            <h6>Software & Alat</h6>
+            <p id="modal-tools">-</p>
+          </div>
+        </div>
+
+        <div style="margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap;">
+          <a href="javascript:void(0)" id="modal-link-btn" target="_blank" rel="noopener noreferrer" class="btn-primary" style="display: none;">
+            <span>Buka Link Proyek / Tonton</span>
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-notice">
+    <i class="fa-solid fa-circle-check" style="color: var(--accent-cyan);"></i>
+    <span class="toast-msg">Tersalin ke papan klip</span>
+  </div>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-brand-box">
+        <div class="footer-brand-name">{{ profile.name | upper }}</div>
+        <div class="footer-sub-text">{{ profile.major }} &bull; {{ profile.faculty }} &bull; {{ profile.university }}</div>
+        <div class="footer-copy">
+          &copy; 2026 <strong>{{ profile.name }}</strong> (NIM: {{ profile.nim }}). Dibuat untuk Tugas MAD61123 Pemrograman Lanjut.
+        </div>
+      </div>
+      <div class="footer-socials">
+        <a href="{{ profile.linkedin }}" target="_blank" rel="noopener noreferrer" class="social-circle-link" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="{{ profile.instagram }}" target="_blank" rel="noopener noreferrer" class="social-circle-link" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="{{ profile.tiktok }}" target="_blank" rel="noopener noreferrer" class="social-circle-link" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://wa.me/{{ profile.whatsapp_raw }}" target="_blank" rel="noopener noreferrer" class="social-circle-link" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="mailto:{{ profile.email }}" class="social-circle-link" title="Email"><i class="fa-regular fa-envelope"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

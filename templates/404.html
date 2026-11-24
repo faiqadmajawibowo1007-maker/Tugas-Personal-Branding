@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}404 - Halaman Tidak Ditemukan | Faiq Admaja Wibowo{% endblock %}
+
+{% block content %}
+  <section class="error-page-section">
+    <div class="container error-container">
+      <div class="error-code-badge">
+        <span>404</span>
+      </div>
+      
+      <h1 class="error-title">Halaman Tidak Ditemukan</h1>
+      <p class="error-message">
+        Mohon maaf, rute URL yang Anda tuju tidak tersedia atau telah dipindahkan. Silakan kembali ke halaman utama untuk melanjutkan eksplorasi portofolio.
+      </p>
+
+      <div class="error-actions">
+        <a href="{{ url_for('home') }}" class="btn-primary">
+          <i class="fa-solid fa-house"></i>
+          <span>Kembali ke Beranda</span>
+        </a>
+        <a href="{{ url_for('portfolio') }}" class="btn-secondary">
+          <i class="fa-solid fa-layer-group"></i>
+          <span>Lihat Portofolio</span>
+        </a>
+        <a href="{{ url_for('contact') }}" class="btn-secondary">
+          <i class="fa-solid fa-envelope"></i>
+          <span>Hubungi Saya</span>
+        </a>
+      </div>
+    </div>
+  </section>
+{% endblock %}

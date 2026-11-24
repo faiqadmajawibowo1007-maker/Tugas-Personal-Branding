@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}{{ project.title }} | Studi Kasus Portofolio{% endblock %}
+
+{% block content %}
+  <section class="breadcrumb-section">
+    <div class="container">
+      <nav class="breadcrumb-nav">
+        <a href="{{ url_for('home') }}"><i class="fa-solid fa-house"></i> Beranda</a>
+        <i class="fa-solid fa-chevron-right separator"></i>
+        <a href="{{ url_for('portfolio') }}">Portofolio Karya</a>
+        <i class="fa-solid fa-chevron-right separator"></i>
+        <span class="current">{{ project.title }}</span>
+      </nav>
+    </div>
+  </section>
+
+  <section class="project-detail-section scroll-fade-section">
+    <div class="container">
+      
+      <div class="detail-header-block">
+        <div class="detail-meta-pill">
+          <span class="pill-category">{{ project.category_name }}</span>
+          <span class="pill-year">{{ project.year }}</span>
+        </div>
+        <h1 class="detail-title">{{ project.title }}</h1>
+        <p class="detail-summary-lead">{{ project.summary }}</p>
+      </div>
+
+      <div class="detail-media-stage">
+        <div class="stage-frame">
+          <img src="{{ url_for('static', filename=project.image) }}" alt="{{ project.title }}" class="detail-hero-img">
+        </div>
+      </div>
+
+      <div class="detail-meta-strip">
+        <div class="meta-strip-item">
+          <span class="meta-strip-label"><i class="fa-solid fa-building-user"></i> Klien / Organisasi</span>
+          <span class="meta-strip-value">{{ project.client }}</span>
+        </div>
+        <div class="meta-strip-item">
+          <span class="meta-strip-label"><i class="fa-regular fa-calendar-check"></i> Tahun Produksi</span>
+          <span class="meta-strip-value">{{ project.year }}</span>
+        </div>
+        <div class="meta-strip-item">
+          <span class="meta-strip-label"><i class="fa-solid fa-layer-group"></i> Kategori Proyek</span>
+          <span class="meta-strip-value">{{ project.category_name }}</span>
+        </div>
+        <div class="meta-strip-item">
+          <span class="meta-strip-label"><i class="fa-solid fa-screwdriver-wrench"></i> Perangkat & Tools</span>
+          <span class="meta-strip-value">{{ project.tools }}</span>
+        </div>
+      </div>
+
+      <div class="detail-body-grid">
+        
+        <div class="detail-narrative-col">
+          <div class="content-card">
+            <h3><i class="fa-solid fa-circle-info"></i> Latar Belakang & Deskripsi Proyek</h3>
+            <p>{{ project.desc }}</p>
+            
+            <h4 style="margin-top: 24px; margin-bottom: 12px; color: var(--text-main); font-size: 1.15rem;">
+              <i class="fa-solid fa-sparkles" style="color: var(--palette-sky);"></i> Keunggulan Teknis & Pendekatan Kreatif
+            </h4>
+            <ul class="detail-highlights-list">
+              {% for hl in project.highlights %}
+                <li>
+                  <i class="fa-solid fa-check-circle"></i>
+                  <span>{{ hl }}</span>
+                </li>
+              {% endfor %}
+            </ul>
+
+            <div class="detail-actions-bar" style="margin-top: 32px;">
+              <a href="{{ project.link }}" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                <span>{{ project.link_label }}</span>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+              <a href="{{ url_for('contact') }}?service={{ project.category_name }}" class="btn-secondary">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>Diskusikan Proyek Serupa</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-side-col">
+          <div class="content-card side-author-card">
+            <div class="side-author-avatar">
+              <img src="{{ url_for('static', filename='assets/faiq_avatar.jpg') }}" alt="{{ profile.name }}">
+            </div>
+            <h4>{{ profile.name }}</h4>
+            <p class="side-author-role">{{ profile.role_title }}</p>
+            <p class="side-author-bio">{{ profile.org_role }} &bull; {{ profile.university }}</p>
+
+            <div class="side-divider"></div>
+
+            <div class="side-btn-group">
+              <a href="{{ url_for('portfolio') }}" class="btn-secondary" style="width: 100%; justify-content: center;">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>Kembali ke Portofolio</span>
+              </a>
+              <a href="https://wa.me/{{ profile.whatsapp_raw }}" target="_blank" rel="noopener noreferrer" class="btn-primary" style="width: 100%; justify-content: center; background: #25d366; border-color: #25d366;">
+                <i class="fa-brands fa-whatsapp"></i>
+                <span>Tanya via WhatsApp</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="other-projects-block" style="margin-top: 60px;">
+        <h3 class="section-title" style="font-size: 1.5rem; margin-bottom: 24px;">Karya Proyek <span class="gradient-text">Lainnya</span></h3>
+        <div class="projects-grid">
+          {% for op in other_projects %}
+            <div class="project-card" data-category="{{ op.category }}" data-id="{{ op.id }}">
+              <div class="project-thumbnail-wrapper">
+                <span class="project-badge-type">{{ op.category_name }}</span>
+                <img src="{{ url_for('static', filename=op.image) }}" alt="{{ op.title }}" class="project-thumb">
+              </div>
+              <div class="project-info">
+                <h4 class="project-title" style="font-size: 1.05rem;">{{ op.title }}</h4>
+                <p class="project-summary" style="font-size: 0.85rem;">{{ op.summary }}</p>
+                <div class="project-footer-tags">
+                  <a href="{{ url_for('project_detail', project_id=op.id) }}" class="project-direct-btn">
+                    <span>Lihat Detail</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+    </div>
+  </section>
+{% endblock %}
